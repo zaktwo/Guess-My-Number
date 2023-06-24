@@ -7,8 +7,7 @@
 // console.log(document.querySelector('.guess').value);
 // const guessNumber = Number(document.querySelector('.guess').value);
 
-const secretNumber = Math.trunc(Math.random() * 20) + 1;
-document.querySelector('.number').textContent = secretNumber;
+let secretNumber = Math.trunc(Math.random() * 20) + 1;
 let scoreD = document.querySelector('.score').value;
 let score = 20;
 document.querySelector('.check').addEventListener('click', e => {
@@ -23,6 +22,10 @@ document.querySelector('.check').addEventListener('click', e => {
   } else if (guessNumber === secretNumber) {
     document.querySelector('.message').textContent = '🎉 Correct Number!';
     document.querySelector('.highscore').textContent = score;
+    document.querySelector('body').style.backgroundColor ='#60b347';
+    document.querySelector('.number').style.width = '30rem';
+    document.querySelector('.number').textContent = secretNumber;
+
   } else if (guessNumber > secretNumber) {
     if (score > 1) {
       document.querySelector('.message').textContent = '⬇️ less';
@@ -30,22 +33,33 @@ document.querySelector('.check').addEventListener('click', e => {
       document.querySelector('.score').textContent = score;
     } else {
       document.querySelector('.score').textContent = 0;
+      document.querySelector('.message').textContent = '💥You lost the game!';
     }
   } else if (guessNumber < secretNumber) {
-    if (score < 20) {
+    if (score > 1) {
       document.querySelector('.message').textContent = '⬆️ more';
       score--;
       document.querySelector('.score').textContent = score;
+    } else {
+      document.querySelector('.score').textContent = 0;
+      document.querySelector('.message').textContent = '💥You lost the game!';
     }
-  } else if (guessNumber > 20 || guessNumber  <= 0 ) {
-    document.querySelector('.message').textContent = '❌ OUT OF RANGE';
-    score--;
-    document.querySelector('.score').textContent = score;
   }
-  //  else if (guessNumber  < 0) {
-  //   document.querySelector('.message').textContent = '❌ OUT OF RANGE';
-  //   score--;
-  //   document.querySelector('.score').textContent = score;
+  document.querySelector('.again').addEventListener('click', e=>{
+    document.querySelector('.score').textContent = 20;
+    secretNumber = Math.trunc(Math.random() * 20) + 1;
+    document.querySelector('.message').textContent = 'start guessing ...'
+    document.querySelector('body').style.backgroundColor ='#222';
+    document.querySelector('.number').style.width = '15rem';
+    document.querySelector('.number').textContent = '?';
+    document.querySelector('.guess').value= ' ';
+
+  });
+  // } else if (guessNumber < 20 && guessNumber > 0) {
+  //   document.querySelector('.message').textContent = 'OUT OF RANGE';
+  // } else if( guessNumber >0) {
+  //   document.querySelector('.message').textContent = 'OUT OF RANGE';
+
   // }
 
   //   } while (guessNumber === secretNumber);
